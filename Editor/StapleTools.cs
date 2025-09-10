@@ -502,38 +502,72 @@ namespace Staple
         [MenuItem("Staple Engine/Tools/Export/Material")]
         public static void ExportMaterial()
         {
-            if(Selection.activeObject is not Material material)
+            var materials = Selection.objects.Where(x => x is Material)
+                .Select(x => (Material)x)
+                .ToArray();
+
+            if(materials.Length == 0)
             {
                 EditorUtility.DisplayDialog("Invalid asset", "You need to select a material", "OK");
 
                 return;
             }
 
-            var path = EditorUtility.SaveFilePanel("Save Staple Material", "", "Material.material", "material");
+            var path = materials.Length > 1 ? EditorUtility.SaveFolderPanel("Save Staple Materials", "", "") : 
+                EditorUtility.SaveFilePanel("Save Staple Material", "", $"{materials[0].name}.material", "material");
 
             if (string.IsNullOrEmpty(path))
             {
                 return;
             }
 
-            var outValue = ExportMaterial(material);
-
-            if(outValue == null)
+            static bool Export(Material material, string path)
             {
-                return;
+                var outValue = ExportMaterial(material);
+
+                if (outValue == null)
+                {
+                    return false;
+                }
+
+                var text = JsonConvert.SerializeObject(outValue, Formatting.Indented, new JsonSerializerSettings()
+                {
+                    Converters =
+                    {
+                        new StringEnumConverter(),
+                    }
+                });
+
+                System.IO.File.WriteAllText(path, text);
+
+                return true;
             }
 
-            var text = JsonConvert.SerializeObject(outValue, Formatting.Indented, new JsonSerializerSettings()
+            if(materials.Length == 1)
             {
-                Converters =
+                if (Export(materials[0], path) == false)
                 {
-                    new StringEnumConverter(),
+                    EditorUtility.DisplayDialog("Error", "Failed to export material", "OK");
+
+                    return;
                 }
-            });
+            }
+            else
+            {
+                foreach(var material in materials)
+                {
+                    var p = Path.Combine(path, $"{material.name}.material");
 
-            System.IO.File.WriteAllText(path, text);
+                    if(Export(material, p) == false)
+                    {
+                        EditorUtility.DisplayDialog("Error", "Failed to export one or more materials!", "OK");
 
-            EditorUtility.DisplayDialog("Exported", "Material exported successfully!", "OK");
+                        return;
+                    }
+                }
+            }
+
+            EditorUtility.DisplayDialog("Exported", "Materials exported successfully!", "OK");
         }
     }
 }
