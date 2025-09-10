@@ -1,0 +1,16 @@
+{
+    "name": "StapleUnityTools.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cc0ea798dcd3d4f4fbece6f2bbbc82f2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,7 @@
+{
+	"name": "com.staple.unitytools",
+	"version": "1.0.0",
+	"displayName": "Staple Engine Unity Tools",
+	"description": "Contains tools for managing content for the Staple Engine",
+	"license": "MIT"
+}
