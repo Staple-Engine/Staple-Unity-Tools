@@ -11,5 +11,11 @@ namespace Staple
         public List<string> enabledShaderVariants = new();
 
         public CullingMode cullingMode = CullingMode.Back;
+
+        public bool overrideShaderRenderQueue;
+
+        public MaterialRenderQueue renderQueue;
+
+        public int renderQueueOffset;
     }
 }

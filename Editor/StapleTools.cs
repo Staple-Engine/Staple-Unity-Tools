@@ -163,7 +163,7 @@ namespace Staple
         [MenuItem("Staple Engine/Tools/Export/Scene")]
         public static void ExportScene()
         {
-            var path = EditorUtility.SaveFilePanel("Save Staple Scene", "", "Scene.scene", "scene");
+            var path = EditorUtility.SaveFilePanel("Save Staple Scene", "", $"{SceneManager.GetActiveScene().name}.scene", "scene");
 
             if(string.IsNullOrEmpty(path))
             {
