@@ -5,6 +5,6 @@
 	"description": "Contains tools for managing content for the Staple Engine",
 	"license": "MIT",
 	"dependencies": {
-		"com.unity.nuget.newtonsoft-json": "3.2.0"
+		"com.unity.nuget.newtonsoft-json": "3.2.2"
 	}
 }
